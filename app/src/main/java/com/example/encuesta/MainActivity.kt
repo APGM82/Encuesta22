@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity() {
         })
         var miBoton2: Button = findViewById(R.id.botonReiniciar)
         miBoton2.setOnClickListener() {
+            listaEncuestas.clear()
             nombre.setText("")
             nombre.isEnabled=true
             anon.isChecked=false
