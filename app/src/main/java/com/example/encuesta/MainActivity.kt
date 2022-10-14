@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         var nombre:TextView=findViewById(R.id.editTextTextPersonName)
         var anon: Switch=findViewById(R.id.switch1)
-
+        var listaEncuestas= ArrayList<Encuesta>()
         anon.setOnClickListener() {
             nombre.isEnabled = !anon.isChecked
         }
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                 nombre.setText("Anónimo")
             }
             var msg = ""
-            // We'll check which radiobutton is clicked
+
             when{
                 radio1.isChecked-> msg=radio1.text.toString()
                 radio2.isChecked->msg=radio2.text.toString()
@@ -53,8 +53,9 @@ class MainActivity : AppCompatActivity() {
             if (marca3.isChecked()) {
                 marcas += " DAW "
             }
+                listaEncuestas.add(Encuesta(nombre.text.toString(),msg,marcas,barra.progress))
+                //oculto.setText(oculto.text.toString()+nombre.text.toString()+" "+" "+msg+ " "+marcas+" "+"Horas: " +textoBarra.text.toString()+System.getProperty("line.separator"))
 
-                oculto.setText(oculto.text.toString()+nombre.text.toString()+" "+" "+msg+ " "+marcas+" "+"Horas: " +textoBarra.text.toString()+System.getProperty("line.separator"))
 
             nombre.setText("")
             nombre.isEnabled=true
@@ -98,10 +99,17 @@ class MainActivity : AppCompatActivity() {
         var miBoton3: Button = findViewById(R.id.botonContar)
         miBoton3.setOnClickListener() {
 
-                Toast.makeText(this, "Hay "+(oculto.lineCount-1).toString()+" encuesta/s", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Hay "+listaEncuestas.size.toString()+" encuesta/s", Toast.LENGTH_LONG).show()
         }
         var miBoton4: Button = findViewById(R.id.botonResumen)
         miBoton4.setOnClickListener() {
+
+            oculto.text = ""
+            for(i in 0..listaEncuestas.size-1){
+
+                oculto.setText(oculto.text.toString()+listaEncuestas[i].Nombre+", "+listaEncuestas[i].sistema+", "+listaEncuestas[i].especialidad+", Horas: "+listaEncuestas[i].horas.toString()+System.getProperty("line.separator"))
+
+            }
             resumen.setText(oculto.text)
         }
     }
